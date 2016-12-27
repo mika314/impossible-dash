@@ -10,7 +10,7 @@ Hero::Hero(SDL2pp::Renderer &renderer, Library &library):
 
 void Hero::draw()
 {
-  renderer.Copy(library.hero, SDL2pp::NullOpt, SDL2pp::Rect(Width / 10 - 32, Height - Height / 10 - y - 64, 64, 64));
+  renderer.Copy(library.hero, SDL2pp::NullOpt, SDL2pp::Rect(Width / 10 - 32, Height - Height / 10 - y - 64, 64, 64), direction, SDL2pp::NullOpt);
 }
 
 void Hero::tick()
@@ -27,11 +27,32 @@ void Hero::tick()
     y = newY;
   }
   vy -= 0.01f;
+  if (direction > newDirection)
+  {
+    direction -= 0.5;
+    if (direction <= newDirection)
+    {
+      while (newDirection >= 360)
+        newDirection -= 360;
+      direction = newDirection;
+    }
+  }
+  if (direction < newDirection)
+  {
+    direction += 0.5;
+    if (direction >= newDirection)
+    {
+      while (newDirection >= 360)
+        newDirection -= 360;
+      direction = newDirection;
+    }
+  }
 }
 
 void Hero::jump()
 {
   vy += 1.6f;
+  newDirection += 90;
 }
 
 const float &Hero::getX() const

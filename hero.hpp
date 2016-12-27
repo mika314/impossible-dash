@@ -20,4 +20,6 @@ private:
   float y = 300.0f;
   float vy = 0.0f;
   float bottom = 0.0f;
+  float direction = 0.0f;
+  float newDirection = 0.0f;
 };
